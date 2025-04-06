@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+
+int main() {
+    double a,b;
+    string s;
+    cout<<"please input your two number (a,b) =>";
+    cin>>a>>b;
+    cout<<"(+,-,*,/) =>";
+    cin>>s;
+    if(s=="+"){
+        cout<<"a + b = "<<a+b;
+    }else if(s=="-"){
+        cout<<"a - b = "<<a-b;
+    }else if(s=="*"){
+        cout<<"a * b = "<<a*b;
+    }else if(s=="/"){
+        if(b != 0){
+            cout<<"a / b = "<<a/b;
+        }else{
+            cout<<"b cannot be 0";
+        }
+    }    
+    return 0;
+}
