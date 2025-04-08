@@ -1,5 +1,6 @@
 #include<iostream>
 #include<math.h>
+#include<iomanip>
 using namespace std;
 
 double change_to_radian(double rad){
@@ -13,9 +14,9 @@ int main(){
     while(cin>>num1){
         bool sign = false;
         do{
-            cout<<"( +, -, *, /, sin, cos, tan, cot, sec, csc) => ";
+            cout<<"( +, -, *, /, sin, cos, tan, cot, sec, csc, log, x^y) => ";
             cin>>s;
-            if(s=="sin" || s=="cos" || s=="tan" || s=="cot" || s=="sec" || s=="csc" || s == "+" || s == "-" || s == "*" || s == "/"){
+            if(s=="sin" || s=="cos" || s=="tan" || s=="cot" || s=="sec" || s=="csc" || s == "+" || s == "-" || s == "*" || s == "/" || s == "log" || s == "x^y"){
                 sign = true;
                 break;
             }else{
@@ -63,7 +64,16 @@ int main(){
 
             }
             cout<<num1<<" "<<s<<" "<<num2<<" = "<<ans<<"\n";
-        }
+        }else if(s == "log"){
+        	cout<<"log("<<num1<<") = ";
+        	cout<<fixed<<setprecision(4)<<log10(num1)<<"\n";
+        	cout.unsetf(ios::fixed);
+		}else if(s == "x^y"){
+			double y;
+			cout<<"x(base) is "<<num1<<".\nPlease enter y(exponents): ";
+			cin>>y;
+			cout<<num1<<"^"<<y<<" = "<<pow(num1, y)<<"\n";
+		}
     cout<<"please enter a number: ";
     }
  
