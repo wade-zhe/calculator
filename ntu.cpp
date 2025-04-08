@@ -1,5 +1,5 @@
 #include<iostream>
-#include<math.h>
+#include<cmath>
 #include<iomanip>
 using namespace std;
 
@@ -14,16 +14,16 @@ int main(){
     while(cin>>num1){
         bool sign = false;
         do{
-            cout<<"( +, -, *, /, sin, cos, tan, cot, sec, csc, log, x^y) => ";
+            cout<<"( +, -, *, /, sin, cos, tan, cot, sec, csc, log, x^y, rad ,square-root) => ";
             cin>>s;
-            if(s=="sin" || s=="cos" || s=="tan" || s=="cot" || s=="sec" || s=="csc" || s == "+" || s == "-" || s == "*" || s == "/" || s == "log" || s == "x^y"){
+            if(s=="sin" || s=="cos" || s=="tan" || s=="cot" || s=="sec" || s=="csc" || s == "rad" || s == "+" || s == "-" || s == "*" || s == "/" || s == "log" || s == "x^y" || s == "square-root"){
                 sign = true;
                 break;
             }else{
                 cout<<"please enter the operator again.\n";
             }
         }while(sign == 0);
-        if(s=="sin" || s=="cos" || s=="tan"|| s=="cot" || s=="sec" || s=="csc"){
+        if(s=="sin" || s=="cos" || s=="tan"|| s=="cot" || s=="sec" || s=="csc" || s == "rad"){
             if(num1>=360){
                 num1 = fmod(num1, 360);
             }
@@ -45,9 +45,11 @@ int main(){
                 cout<<"sec("<<num1<<") = "<< 1.0 / cos(num_rad) << "\n";
             }else if(s == "csc"){
                 cout<<"csc("<<num1<<") = "<< 1.0 / sin(num_rad) << "\n";
+            }else if(s == "rad"){
+                cout<<"radian("<<num1<<") = "<<num_rad<<"\n";
             }else{
-                
-            }
+            	
+			}
         }else if(s == "+" || s == "-" || s == "*" || s == "/"){
             double num2,ans;
             cout<<"please enter another number: ";
@@ -68,13 +70,16 @@ int main(){
         	cout<<"log("<<num1<<") = ";
         	cout<<fixed<<setprecision(4)<<log10(num1)<<"\n";
         	cout.unsetf(ios::fixed);
+        	cout << setprecision(6);
 		}else if(s == "x^y"){
 			double y;
 			cout<<"x(base) is "<<num1<<".\nPlease enter y(exponents): ";
 			cin>>y;
 			cout<<num1<<"^"<<y<<" = "<<pow(num1, y)<<"\n";
+		}else if(s == "square-root"){
+			cout<<"sqrt("<<num1<<") = "<<sqrt(num1)<<"\n";
 		}
-    cout<<"please enter a number: ";
+    cout<<"please enter a number (or press Ctrl+Z to quit): ";
     }
  
     return 0;
