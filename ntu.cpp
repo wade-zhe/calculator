@@ -8,15 +8,15 @@ double change_to_radian(double rad){
 }
 
 int main(){
-    double num1;
+    double num1,ans;
     string s;
     cout<<"please enter a number: ";
     while(cin>>num1){
         bool sign = false;
         do{
-            cout<<"( +, -, *, /, sin, cos, tan, cot, sec, csc, log, x^y, rad ,square-root) => ";
+            cout<<"( +, -, *, /, sin, cos, tan, cot, sec, csc, log, x^y, rad ,sqrt, !, 1/x) => ";
             cin>>s;
-            if(s=="sin" || s=="cos" || s=="tan" || s=="cot" || s=="sec" || s=="csc" || s == "rad" || s == "+" || s == "-" || s == "*" || s == "/" || s == "log" || s == "x^y" || s == "square-root"){
+            if(s=="sin" || s=="cos" || s=="tan" || s=="cot" || s=="sec" || s=="csc" || s == "rad" || s == "+" || s == "-" || s == "*" || s == "/" || s == "log" || s == "x^y" || s == "sqrt" || s == "!" || s == "1/x"){
                 sign = true;
                 break;
             }else{
@@ -51,7 +51,7 @@ int main(){
             	
 			}
         }else if(s == "+" || s == "-" || s == "*" || s == "/"){
-            double num2,ans;
+            double num2;
             cout<<"please enter another number: ";
             cin>>num2;
             if(s == "+"){
@@ -76,9 +76,23 @@ int main(){
 			cout<<"x(base) is "<<num1<<".\nPlease enter y(exponents): ";
 			cin>>y;
 			cout<<num1<<"^"<<y<<" = "<<pow(num1, y)<<"\n";
-		}else if(s == "square-root"){
-			cout<<"sqrt("<<num1<<") = "<<sqrt(num1)<<"\n";
-		}
+		}else if(s == "sqrt"){
+			cout<<"√"<<num1<<" = "<<sqrt(num1)<<"\n";
+		}else if(s == "!"){
+			ans=1; 
+			for(int i=1;i<=num1;i++){
+				ans*=i;	
+		   }
+		   cout<<num1<<"! = "<<ans<<"\n"; 
+		}else if(s == "1/x"){
+			if(num1){ 
+				cout<<"1/"<<num1<<" = "<<fixed<<setprecision(4)<<1.0/num1<<"\n";
+				cout.unsetf(ios::fixed);
+        	cout << setprecision(6);
+			}else{
+				cout<<"denominator can't be 0\n"; 
+			} 
+		} 
     cout<<"please enter a number (or press Ctrl+Z to quit): ";
     }
  
