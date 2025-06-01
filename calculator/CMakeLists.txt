@@ -1,47 +1,39 @@
+# Copyright (C) 2022 The Qt Company Ltd.
+# SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
+
 cmake_minimum_required(VERSION 3.16)
-project(calculator VERSION 0.1 LANGUAGES CXX)
+project(calculator LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
+qt_standard_project_setup()
 
-# Find Qt6
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
-
-# Define source files
-set(PROJECT_SOURCES
-    src/main.cpp
-    src/calculator.cpp
-    include/calculator.h
-)
-
-# Create executable
 qt_add_executable(calculator
-    MANUAL_FINALIZATION
-    ${PROJECT_SOURCES}
+    button.cpp button.h
+    calculator.cpp calculator.h
+    main.cpp
 )
 
-# Include directories
-target_include_directories(calculator PRIVATE include)
-
-# Link Qt6 libraries
-target_link_libraries(calculator PRIVATE Qt6::Widgets)
-
-# Set Windows-specific properties
 set_target_properties(calculator PROPERTIES
     WIN32_EXECUTABLE TRUE
+    MACOSX_BUNDLE TRUE
 )
 
-# Install rules
-include(GNUInstallDirs)
+target_link_libraries(calculator PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+)
+
 install(TARGETS calculator
+    BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-# Finalize executable for Qt6
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(calculator)
-endif()
+qt_generate_deploy_app_script(
+    TARGET calculator
+    OUTPUT_SCRIPT deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})

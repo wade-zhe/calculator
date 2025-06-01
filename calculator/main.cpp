@@ -1,11 +1,14 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
+
 #include <QApplication>
+
 #include "calculator.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     QApplication app(argc, argv);
     Calculator calc;
-    calc.setWindowTitle("Qt Calculator");
-    calc.resize(300, 400);
     calc.show();
     return app.exec();
 }
