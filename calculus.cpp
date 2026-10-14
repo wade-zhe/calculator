@@ -18,26 +18,26 @@ void diff_term(double a, char x, double b, char diff_var, double &new_a, double 
     new_b = b - 1;
 }
 
-//加法 (u + v)' = u' + v'
+//加法
 void diff_add(double a1, char x1, double b1, double a2, char x2, double b2, char diff_var, double &new_a, double &new_b, double &new_a2, double &new_b2) {
     diff_term(a1, x1, b1, diff_var, new_a, new_b);
     diff_term(a2, x2, b2, diff_var, new_a2, new_b2);
 }
 
-//減法 (u - v)' = u' - v'
+//減法
 void diff_sub(double a1, char x1, double b1, double a2, char x2, double b2, char diff_var, double &new_a, double &new_b, double &new_a2, double &new_b2) {
     diff_term(a1, x1, b1, diff_var, new_a, new_b);
     diff_term(a2, x2, b2, diff_var, new_a2, new_b2);
-    new_a2 = -new_a2; // v' 的係數取負
+    new_a2 = -new_a2;
 }
 
-//乘法 (a * u)' = a * u'
+//乘法
 void diff_mul(double a, double term_a, double term_b, double &new_a, double &new_b){
     new_a = a * term_a;
     new_b = term_b;
 }
 
-//除法 (a / x^b)' = (a * x^(-b))'
+//除法
 void diff_div(double a, double b, double &new_a, double &new_b) {
     new_a = a * (-b);
     new_b = -b - 1;
@@ -76,13 +76,12 @@ bool parse_term(const string &term, double &a, char &x, double &b) {
     string num = "";
     size_t i = 0;
 
-    // 處理負號
     if (i < term.size() && term[i] == '-') {
         a = -1.0;
         i++;
     }
 
-    // 提係數
+    //提係數
     while (i < term.size() && (isdigit(term[i]) || term[i] == '.')) {
         num += term[i];
         i++;
@@ -94,18 +93,18 @@ bool parse_term(const string &term, double &a, char &x, double &b) {
         a = (a == -1.0) ? -1.0 : 1.0; 
     }
 
-    // 提變數
+    //提變數
     if (i < term.size() && isalpha(term[i])) {
         x = term[i];
         i++;
     } else if (i == term.size()) {
-        b = 0; // 常數項
+        b = 0; //常數項
         return true;
     } else {
-        return false; // 無效格式
+        return false;
     }
 
-    // 提指數
+    //提指數
     if (i < term.size() && term[i] == '^') {
         i++;
         while (i < term.size() && (isdigit(term[i]) || term[i] == '.')) {
@@ -115,14 +114,14 @@ bool parse_term(const string &term, double &a, char &x, double &b) {
         if (!num.empty()) {
             b = stod(num);
         } else {
-            return false; // 無效指數
+            return false;
         }
     } else {
         b = 1; 
     }
 
     if (i < term.size()) {
-        return false; // 多餘字符
+        return false; //多餘字符
     }
     return true;
 }
@@ -130,14 +129,14 @@ bool parse_term(const string &term, double &a, char &x, double &b) {
 
 bool parse_expression(const string &expr, vector<double> &a, vector<char> &x, vector<double> &b, vector<char> &op) {
     string clean_expr = "";
-    // 移除空格
+
     for (char c : expr) {
         if (c != ' ') {
             clean_expr += c;
         }
     }
 
-    // 處理首項的負號
+    //首項負號
     string current_term = "";
     size_t i = 0;
     if (clean_expr[0] == '-') {
@@ -145,7 +144,7 @@ bool parse_expression(const string &expr, vector<double> &a, vector<char> &x, ve
         i = 1;
     }
 
-    // 分割項和運算符
+
     while (i <= clean_expr.size()) {
         if (i == clean_expr.size() || clean_expr[i] == '+' || clean_expr[i] == '-') {
             if (!current_term.empty()) {
@@ -153,7 +152,7 @@ bool parse_expression(const string &expr, vector<double> &a, vector<char> &x, ve
                 char term_x;
                 double term_b;
                 if (!parse_term(current_term, term_a, term_x, term_b)) {
-                    return false; // 無效項
+                    return false;
                 }
                 a.push_back(term_a);
                 x.push_back(term_x);
@@ -177,9 +176,9 @@ bool parse_expression(const string &expr, vector<double> &a, vector<char> &x, ve
 }
 
 int main() {
-    vector<double> a, b; //係數, 指數
-    vector<char> x, op; //變數, 運算子
-    char diff_var; //要微分的變數
+    vector<double> a, b; //係數 指數
+    vector<char> x, op; //變數 運算子
+    char diff_var;
     string input;
 
     cout<<"Please enter your problem (type 'done' to finish)\n";
@@ -193,7 +192,7 @@ int main() {
             break;
         }
 
-        // 清空陣列
+
         a.clear();
         b.clear();
         x.clear();
@@ -208,9 +207,9 @@ int main() {
 
         cout << "Enter the variable to differentiate with respect to: ";
         cin >> diff_var;
-        cin.ignore(); // 清除換行符
+        cin.ignore();
 
-        // 對每項進行微分
+
         vector<double> new_a(a.size()), new_b(a.size());
         vector<char> new_x(a.size());
         for (size_t i = 0; i < a.size(); i++) {
@@ -241,7 +240,7 @@ int main() {
                 if (i > 0) {
                     cout << (op[i - 1] == '+' ? " + " : " - ");
                     if (new_a[i] < 0) {
-                        new_a[i] = -new_a[i]; // 將負係數移到運算符
+                        new_a[i] = -new_a[i];
                     }
                 } else if (new_a[i] < 0) {
                     cout << "-";
